@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import Authroute from './router/Authroute.js'
 import UserRoute from './router/UserRoute.js'
-
+import PostRoute from './router/PostRoute.js';
 //Routes
 
 const app =  express();
@@ -24,6 +24,8 @@ mongoose.connect(
   //usage of route
   app.use('/auth',Authroute)
   app.use('/user',UserRoute)
+  app.use('/post',PostRoute)
+  
 
 
 
