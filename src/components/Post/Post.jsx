@@ -1,12 +1,18 @@
-import React from 'react'
+import React,{useState} from 'react'
 import './Post.css'
+import { useSelector } from 'react-redux'
 
 const Post = ({data}) => {
+  const{user} = useSelector((state)=>state.authReducer.authData)
+  // const [liked, setliked] = useState(data.likes.includes(user._id))
+  // const [likes, setlikes] = useState(data.likes.length)
     return (
       <div className="Post">
-          <img src={data.img} alt="" />
-  
-  
+        <img
+        src={data.image ? process.env.REACT_APP_PUBLIC_FOLDER + data.image : ""}
+        alt=""
+      />
+          <img src={data.img} alt="" />+  
           <div className="postReact">
           <i class="fa-solid fa-heart"></i>
               {/* <img src={data.liked?Heart: NotLike} alt="" /> */}

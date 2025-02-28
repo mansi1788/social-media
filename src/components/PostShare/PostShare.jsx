@@ -1,24 +1,67 @@
 import React, { useState, useRef } from "react";
-import ProfileImage from '../../img/ProfileImage.jpg'
+import ProfileImage from '../../img/ProfilePicture.jpg'
 import "./PostShare.css";
+import { uploadImage } from "../../actions/uploadAction";
+import { useDispatch, useSelector } from "react-redux";
+import { uploadPost } from "../../api/UploadRequest";
+
 
 const PostShare = () => {
+
+  const dispatch = useDispatch();
   const [image, setImage] = useState(null);
   const imageRef = useRef();
+  const { user } = useSelector((state) => state.authReducer.authData);
+  const loading = useSelector((state) => state.postReducer.uploading);
+
+  const desc = useRef();
 
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
-      setImage({
-        image: URL.createObjectURL(img),
-      });
+      setImage(img);
     }
   };
+  const resetShare = () => {
+    setImage(null);
+    desc.current.value = "";
+  };
+  const handleUpload = async (e) => {
+    e.preventDefault();
+
+    //post data
+    const newPost = {
+      userId: user._id,
+      desc: desc.current.value,
+    };
+
+    // if there is an image with post
+    if (image) {
+      const data = new FormData();
+      const fileName = Date.now() + image.name;
+      data.append("name", fileName);
+      data.append("file", image);
+      newPost.image = fileName;
+      console.log(newPost);
+      try {
+        dispatch(uploadImage(data));
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    dispatch(uploadPost(newPost));
+    resetShare();
+  };
+
+
   return (
     <div className="PostShare">
       <img src={ProfileImage} alt="" />
       <div>
-        <input type="text" placeholder="What's happening" />
+        <input
+        ref = {desc}
+        required
+        type="text" placeholder="What's happening" />
         <div className="postOptions">
           <div className="option" style={{ color: "var(--photo)" }}
           onClick={()=>imageRef.current.click()}
@@ -37,7 +80,14 @@ const PostShare = () => {
           <i class="fa fa-calendar" aria-hidden="true"></i>
             Shedule
           </div>
-          <button className="button ps-button">Share</button>
+          <button
+            className="button ps-button"
+            onClick={handleUpload}
+            disabled={loading}
+          >
+            {loading ? "uploading" : "Share"}
+          </button>
+
           <div style={{ display: "none" }}>
             <input
               type="file"
@@ -51,7 +101,7 @@ const PostShare = () => {
 
         <div className="previewImage">
          <i class="fa-solid fa-xmark" onClick={()=>setImage(null)}></i>
-          <img src={image.image} alt="" />
+         <img src={URL.createObjectURL(image)} alt="preview" />
         </div>
 
       )}
