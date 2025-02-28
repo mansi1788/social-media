@@ -78,7 +78,7 @@ const PostShare = () => {
           </div>{" "}
           <div className="option" style={{ color: "var(--shedule)" }}>
           <i class="fa fa-calendar" aria-hidden="true"></i>
-            Shedule
+            Sehdule
           </div>
           <button
             className="button ps-button"
