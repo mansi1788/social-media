@@ -12,7 +12,7 @@ const Post = ({data}) => {
         src={data.image ? process.env.REACT_APP_PUBLIC_FOLDER + data.image : ""}
         alt=""
       />
-          <img src={data.img} alt="" />+  
+          <img src={data.img} alt="" />
           <div className="postReact">
           <i class="fa-solid fa-heart"></i>
               {/* <img src={data.liked?Heart: NotLike} alt="" /> */}

@@ -33,6 +33,7 @@ mongoose.connect(
   app.use('/user',UserRoute)
   app.use('/post',PostRoute)
   app.use('/upload',UploadRoute)
+  
 
   
 

@@ -2,6 +2,22 @@ import usermodel from "../model/usermodel.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
 
+//Get all ausers
+export const getAllUsers = async(req,res)=>{
+    try {
+        let users = await usermodel.find();
+        users = users.map((user)=>{
+            const{password,...otherDetails}=user._doc
+            return otherDetails
+
+
+
+        })
+        res.status(200).json(users)
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
 
 //get a  user
 export const getUser = async(req,res)=>{
@@ -57,8 +73,8 @@ else{
 export const deleteUser = async(req,res)=>{
     const id = req.params.id
 
-    const {currentUserId, currentUserAdminStatus} = req.body
-    if(currentUserId===id || currentUserAdminStatus)
+    const {_id, currentUserAdminStatus} = req.body
+    if(_id===id || currentUserAdminStatus)
     {
         try {
             await usermodel.findByIdAndDelete(id)
@@ -79,8 +95,8 @@ export const deleteUser = async(req,res)=>{
 export const followUser = async(req,res)=>{
     const id = req.params.id
 
-    const {currentUserId}= req.body
-    if(currentUserId ===id)
+    const {_id}= req.body
+    if(_id ===id)
     {
         res.status(403).json("Action forbidden")
 
@@ -88,11 +104,11 @@ export const followUser = async(req,res)=>{
     else{
         try {
             const followUser = await usermodel.findById(id)
-            const followingUser =await usermodel.findById(currentUserId)
+            const followingUser =await usermodel.findById(_id)
 
-            if(!followUser.followers.includes(currentUserId))
+            if(!followUser.followers.includes(_id))
             {
-                await followUser.updateOne({$push:{ followers:currentUserId}})
+                await followUser.updateOne({$push:{ followers:_id}})
                 await followingUser.updateOne({$push:{ following:id}})
                 res.status(200).json("user followed!")
             }
@@ -114,8 +130,8 @@ export const followUser = async(req,res)=>{
 export const UnfollowUser = async(req,res)=>{
     const id = req.params.id
 
-    const {currentUserId}= req.body
-    if(currentUserId ===id)
+    const {_id}= req.body
+    if(_id ===id)
     {
         res.status(403).json("Action forbidden")
 
@@ -123,11 +139,11 @@ export const UnfollowUser = async(req,res)=>{
     else{
         try {
             const followUser = await usermodel.findById(id)
-            const followingUser =await usermodel.findById(currentUserId)
+            const followingUser =await usermodel.findById(_id)
 
-            if(followUser.followers.includes(currentUserId))
+            if(followUser.followers.includes(_id))
             {
-                await followUser.updateOne({$pull:{ followers:currentUserId}})
+                await followUser.updateOne({$pull:{ followers:_id}})
                 await followingUser.updateOne({$pull:{ following:id}})
                 res.status(200).json("user unfollowed!")
             }
