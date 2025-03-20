@@ -1,33 +1,115 @@
-.FollowersCard{
+.FollowersCard {
     width: 100%;
     border-radius: 0.7rem;
     gap: 1rem;
     display: flex;
     flex-direction: column;
     font-size: 13px;
-
-}
-.follower{
-    display: flex;
-    justify-content: space-between;
+    /* max-height: 15rem; */
+    padding: 15px;
+    background: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     align-items: center;
 }
-.follower>div{
-    display: flex;
-    gap: 10px;
-}
-.followerImg{
-width: 3.2rem;
-height: 3.2rem;
-border-radius: 50%;
 
-}
-.name{
+.follower {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 250px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
-.name>span:nth-of-type(1){
+
+.followerImage {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+}
+
+.name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
     font-weight: bold;
+    color: #333;
+}
+
+.name span {
+    font-size: 12px;
+    font-weight: normal;
+    color: #666;
+}
+
+/* .fc-button {
+    height: 30px;
+    width: 100px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: orange;
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+} */
+
+.fc-button:hover {
+    background-color: darkorange;
+}
+
+.FollowersCard > span {
+    font-weight: bold;
+    color: orange;
+    align-self: center;
+    cursor: pointer;
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+
+/* Default Follow Button */
+.fc-button {
+    height: 30px;
+    width: 100px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: orange;
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Follow Button Hover */
+.fc-button:hover {
+    background-color: darkorange;
+}
+
+/* Unfollow Button */
+.UnfollowButton {
+    background-color: #e74c3c; /* Red background */
+    color: white;
+    font-weight: bold;
+    border: none;
+}
+
+/* Unfollow Button Hover */
+.UnfollowButton:hover {
+    background-color: #c0392b; /* Darker red */
 }

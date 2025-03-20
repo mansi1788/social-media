@@ -3,7 +3,7 @@ import { Modal, useMantineTheme } from "@mantine/core";
 import "./ProfileModal.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { uploadImage } from "../../actions/uploadAction";
+import { uploadImage } from "../../actions/uploadAction.js";
 import { updateUser } from "../../actions/UserAction";
 
 const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
@@ -39,8 +39,6 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
       data.append("name", fileName);
       data.append("file", profileImage);
       UserData.profilePicture = fileName;
-
-      console.log("Uploading profile image:", data);
       try {
         dispatch(uploadImage(data));
       } catch (err) {
@@ -60,22 +58,27 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
       }
     }
     dispatch(updateUser(param.id, UserData));
+
+    // dispatch(updateUser(param.id, UserData));
     setModalOpened(false);
   };
 
   return (
     <Modal
-      overlayColor={
+    overlayProps={{
+      color:
         theme.colorScheme === "dark"
           ? theme.colors.dark[9]
-          : theme.colors.gray[2]
-      }
-      overlayOpacity={0.55}
-      overlayBlur={3}
-      size="55%"
-      opened={modalOpened}
-      onClose={() => setModalOpened(false)}
-    >
+          : theme.colors.gray[2],
+      opacity: 0.55,
+      blur: 3,
+    }}
+    size="55%"
+    opened={modalOpened}
+    onClose={() => setModalOpened(false)}
+  >
+  
+  
       <form className="infoForm" onSubmit={handleSubmit}>
         <h3>Your Info</h3>
         <div>
@@ -149,7 +152,7 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
           Update
         </button>
       </form>
-    </Modal>
+      </Modal>
   );
 };
 

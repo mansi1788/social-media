@@ -1,11 +1,24 @@
 import React from "react";
 import "./ProfileCard.css";
+
 import { Link } from "react-router-dom";
+
 import { useSelector } from "react-redux";
+
 const ProfileCard = ({location}) => {
+
   const { user } = useSelector((state) => state.authReducer.authData);
+
   const posts = useSelector((state)=>state.postReducer.posts)
+
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  if (!user) 
+  {
+    return <div>Loading profileCard...</div>;
+  }
+
+  console.log("profilecard---------------------->>>>>>>>>>>>>>>>>>>>>>>>",user)
 
   return (
     <div className="ProfileCard">
@@ -42,7 +55,7 @@ const ProfileCard = ({location}) => {
             <span>Following</span>
           </div>
           {/* for profilepage */}
-          {location === "profilePage" && (
+        {/* {location === "profilePage" && ( */}
             <>
               <div className="vl"></div>
               <div className="follow">
@@ -52,7 +65,7 @@ const ProfileCard = ({location}) => {
                 <span>Posts</span>
               </div>{" "}
             </>
-          )}
+          {/* )} */}
         </div>
         <hr />
       </div>

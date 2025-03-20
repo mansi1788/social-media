@@ -20,9 +20,7 @@ app.use(bodyParser.urlencoded({limit:'30mb',extended:true}))
 app.use(cors())
 dotenv.config()
 
-mongoose.connect(
-    process.env.MONGO_URI)
-
+mongoose.connect(process.env.MONGO_URI)
 
   .then(() => app.listen(process.env.PORT, () => console.log(`Listening at ${process.env.PORT}`)))
   .catch(err => console.error("Connection error:", err));
