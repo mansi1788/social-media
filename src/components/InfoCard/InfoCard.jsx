@@ -42,7 +42,7 @@ const InfoCard = () => {
 
   console.log("✅ Modal Opened State:", modalOpened);
 
-  
+
 
   return (
     <div className="InfoCard">
